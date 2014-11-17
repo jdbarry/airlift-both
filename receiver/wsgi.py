@@ -62,7 +62,7 @@ view routes
 
 @route('/')
 def home():
-    return bottle.template('home')
+    return bottle.template('home_receiver')
 
 
 @route('/static/:filename')

@@ -63,7 +63,7 @@ def F(n):
 
 @route('/')
 def home():
-    return bottle.template('home', sent=False, body=None)
+    return bottle.template('home_sender', sent=False, body=None)
 
 @post('/fib') 
 def fib():
