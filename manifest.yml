@@ -28,4 +28,4 @@ applications:
     min_version:
         client: 1.4.3
     hooks:
-        post-staging: python create_populate_db.py
+        post-staging: python ./receiver/create_populate_db.py
