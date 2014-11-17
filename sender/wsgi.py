@@ -50,7 +50,7 @@ def send():
 	channel = connection.channel() 
 	channel.queue_declare(queue=queue_name)
 
-	json_body = json.dumps({'sequence_id':number, 'sequence_value':fib})
+	json_body = json.dumps({'sequence_id':int(number), 'sequence_value':int(fib)})
 	 
 	channel.basic_publish(exchange='', routing_key='fibq', body=json_body)
 	connection.close()
@@ -63,7 +63,8 @@ def F(n):
 
 @route('/')
 def home():
-    return bottle.template('home_sender', sent=False, body=None)
+	bottle.TEMPLATE_PATH.insert(0, './sender/views')
+	return bottle.template('home', sent=False, body=None)
 
 @post('/fib') 
 def fib():
@@ -71,7 +72,7 @@ def fib():
 	if not number:
 		return template('Please add a number to the end of url: /fib/5')
 	fib = F(int(number))
-	json_body = json.dumps({'sequence_id':number, 'sequence_value':fib})
+	json_body = json.dumps({'sequence_id':int(number), 'sequence_value':int(fib)})
 	return json_body
 
 

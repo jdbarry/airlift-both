@@ -200,6 +200,10 @@ class MessageQueue:
             
             method_frame, header_frame, body = channel.basic_get(queue_name)
             if method_frame:
+                print 'This is the body!! Why is this invalid?'
+                print method_frame
+                print header_frame
+                print body
                 try:
                     self.decodeAndAddMessage(body) 
                 except:
@@ -278,6 +282,10 @@ class MessageQueue:
         try:
             self.decodeAndAddMessage(body) 
         except:
+            print 'This is the body!! Why is this invalid?'
+            print method_frame
+            print header_frame
+            print body
             self.log.error ("invalid format of message, removing message from queue")
                 
         channel.basic_ack(delivery_tag=method_frame.delivery_tag)

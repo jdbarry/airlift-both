@@ -50,7 +50,7 @@ def getReceived():
     log.debug("handling /received path")
 
     #Gets messages, if method_frame decodes and adds to db
-    messageQueue.getMessages(queue_name,100)
+    #messageQueue.getMessages(queue_name,100)
     
     all_messages = messageDB.getMessages()
     
@@ -62,7 +62,8 @@ view routes
 
 @route('/')
 def home():
-    return bottle.template('home_receiver')
+	bottle.TEMPLATE_PATH.insert(0, './receiver/views')
+	return bottle.template('home')
 
 
 @route('/static/:filename')
