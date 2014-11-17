@@ -1,0 +1,31 @@
+applications:
+  .:
+   name: sender
+   mem: 128M
+   buildpack: https://github.com/ActiveState/stackato-buildpack-python
+   path: ./sender/
+   services:
+    airlift-mq:
+      type: rabbitmq3	  
+   stackato:
+    env:
+        QUEUE_NAME: fibq
+    min_version:
+        client: 1.4.3
+  .:
+   name: receiver
+   mem: 128M
+   buildpack: https://github.com/ActiveState/stackato-buildpack-python
+   path: ./receiver/
+   services:
+    ${name}-db:
+      type: mysql
+    airlift-mq:
+      type: rabbitmq3   
+   stackato:
+    env:
+        QUEUE_NAME: fibq
+    min_version:
+        client: 1.4.3
+    hooks:
+        post-staging: python create_populate_db.py
