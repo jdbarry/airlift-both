@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 bottle
 MySQL-python
 pika
+=======
+bottle
+MySQL-python
+pika
+>>>>>>> 3e82794d0e99bb626f99321744dc3acd36e292ae
