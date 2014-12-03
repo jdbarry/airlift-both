@@ -1,17 +1,10 @@
 #!/usr/bin/env python
 
-import re
 import os
-import sys
-import time
 import bottle
 import logging
-import urllib2
-import urlparse
-import contextlib
-from messages import Message, MessageDB, MessageEncoder, MessageQueue
 
-from bottle import route, request,get, post, put, delete, response, template
+from bottle import route, request,post, template
 import  pika
 
 
