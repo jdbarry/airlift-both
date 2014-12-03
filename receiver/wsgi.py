@@ -1,17 +1,13 @@
 #!/usr/bin/env python
 
-import re
 import os
-import sys
-import time
 import bottle
 import logging
-import urllib2
 import urlparse
-import contextlib
-from messages import Message, MessageDB, MessageEncoder, MessageQueue
 
-from bottle import route, request,get, post, put, delete, response, template
+from messages import  MessageDB, MessageEncoder, MessageQueue
+
+from bottle import route, get
 
 
 import json
@@ -25,7 +21,12 @@ log.setLevel(logging.DEBUG)
 
 log.debug("setting up message queue and db connection...")
 
-mysql_url = urlparse.urlparse(os.environ['MYSQL_URL'])
+try:
+    mysql_url = urlparse.urlparse(os.environ['MYSQL_URL'])
+except KeyError:
+    log.warn("env variable MYSQL_URL not found, reverting to DATABASE_URL")
+    mysql_url = urlparse.urlparse(os.environ['DATABASE_URL'])
+
 rabbit_url = os.environ['RABBITMQ_URL']
 queue_name = os.environ['QUEUE_NAME']
 

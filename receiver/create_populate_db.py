@@ -15,7 +15,11 @@ if __name__ == '__main__':
         log = logging.getLogger('receiver')
         log.setLevel(logging.DEBUG)
 
-        mysql_url = urlparse.urlparse(os.environ['MYSQL_URL'])
+        try:
+            mysql_url = urlparse.urlparse(os.environ['MYSQL_URL'])
+        except KeyError:
+            log.warn("env variable MYSQL_URL not found, reverting to DATABASE_URL")
+            mysql_url = urlparse.urlparse(os.environ['DATABASE_URL'])
     
         #rdb = redis.Redis(host=url.hostname, port=url.port, password=url.password)
         
