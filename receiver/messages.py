@@ -200,14 +200,11 @@ class MessageQueue:
             
             method_frame, header_frame, body = channel.basic_get(queue_name)
             if method_frame:
-                print 'This is the body!! Why is this invalid?'
-                print method_frame
-                print header_frame
-                print body
                 try:
+                    self.log.debug("message %d, method frame = %s, header fraem = %s"%(i,method_frame,header_frame))
                     self.decodeAndAddMessage(body) 
                 except:
-                    self.log.error ("invalid format of message, removing message from queue")
+                    self.log.error ("message %d, invalid format of message, removing message from queue"%i)
                 
                 channel.basic_ack(delivery_tag=method_frame.delivery_tag)
                     
