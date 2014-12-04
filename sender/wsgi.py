@@ -6,13 +6,14 @@ import logging
 
 from bottle import route, request,post, template
 import  pika
-
-
+import threading
+from time import sleep
 import json
+import psutil
 
 STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static')
 
-logging.basicConfig()
+logging.basicConfig(format="%(threadName)s:%(thread)d:%(message)s")
 log = logging.getLogger('sender')
 log.setLevel(logging.DEBUG)
 
@@ -21,12 +22,31 @@ log.debug("setting up message queue")
 
 rabbit_url = os.environ['RABBITMQ_URL']
 queue_name = os.environ['QUEUE_NAME']
+async_cpu = os.environ['ASYNC_CPU']
 
-print os.environ['RABBITMQ_URL']
+log.debug("rabbit mq url:%s"%os.environ['RABBITMQ_URL'])
 
-#rdb = redis.Redis(host=url.hostname, port=url.port, password=url.password)
 
- 
+
+def asyncCPUTest():
+	log.debug("starting async CPU test method")
+	while (1):
+		sleep(5)
+		log.debug("CPU percent = %d"%(psutil.cpu_percent()))
+	
+	
+if (async_cpu != None) and async_cpu == "1":
+	keepGoing = True
+		
+	"""
+	sets up the async message processing thread, passing it the queue name to listen on
+	"""
+	log.debug("spawning async CPU loadtest thread")
+	d = threading.Thread(name='sender-daemon', target=asyncCPUTest, args = ())
+	d.setDaemon(True)
+	d.start()
+
+
 
 '''
 view routes
