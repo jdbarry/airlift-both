@@ -89,6 +89,19 @@ def fib():
 	return json_body
 
 
+'''
+Adding this route for use with StormRunner (to automate load, compute utilization)
+'''
+
+@post('/fib/<number>') 
+def fib_num():
+	if not number:
+		return template('Please add a number to the end of url: /fib/5')
+	fib = F(int(number))
+	json_body = json.dumps({'sequence_id':int(number), 'sequence_value':int(fib)})
+	return json_body
+
+
 @route('/static/:filename')
 def serve_static(filename):
     log.debug("serving static assets")
