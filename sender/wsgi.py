@@ -93,8 +93,8 @@ def fib():
 Adding this route for use with StormRunner (to automate load, compute utilization)
 '''
 
-@get('/fib/<number>') 
-def fib_num():
+@route('/fib/<number:int>') 
+def fib_num(number):
 	if not number:
 		return template('Please add a number to the end of url: /fib/5')
 	fib = F(int(number))
