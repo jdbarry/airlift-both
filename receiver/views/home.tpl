@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Reciever App</title>
+    <title>Receiver App</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="refresh" content="10">
     <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon"> 
